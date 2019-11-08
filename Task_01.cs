@@ -3,10 +3,15 @@ using MathNet.Numerics.LinearAlgebra;
 
 namespace Example_005 {
     public class Task_01 {
-         /// <summary>
+        /// <summary>
         /// Генератор псевдослучайных чисел
         /// </summary>
         static Random randomize;
+         
+        /// <summary>
+        /// Вспомогательные методы
+        /// </summary>
+        private Helper _helper = new Helper();
         
         /// <summary>
         /// Отступ между числами в матрице
@@ -16,7 +21,7 @@ namespace Example_005 {
         /// <summary>
         /// Пользвотельский выбор операции над матрицами
         /// </summary>
-        private int userAction;
+        private string userAction;
         
         /// <summary>
         /// Кол-во столбцов для матрицы 1
@@ -77,10 +82,10 @@ namespace Example_005 {
         /// </summary>
         private void AskSizesOnce() {
             Console.WriteLine("Сколько строк в матрице?");
-            userRows_1 = Convert.ToInt32(Console.ReadLine());
+            userRows_1 = _helper.ParseUserInput(Console.ReadLine());
             
             Console.WriteLine("Сколько столбцов в матрице?");
-            userColumns_1 = Convert.ToInt32(Console.ReadLine());
+            userColumns_1 = _helper.ParseUserInput(Console.ReadLine());
         }
 
         /// <summary>
@@ -88,10 +93,10 @@ namespace Example_005 {
         /// </summary>
         private void AskSizesTwice() {
             Console.WriteLine("Сколько строк в первой матрице?");
-            userRows_1 = Convert.ToInt32(Console.ReadLine());
+            userRows_1 = _helper.ParseUserInput(Console.ReadLine());
             
             Console.WriteLine("Сколько столбцов в первой матрице?");
-            userColumns_1 = Convert.ToInt32(Console.ReadLine());
+            userColumns_1 = _helper.ParseUserInput(Console.ReadLine());
 
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("\nПри умножении кол-во строк во второй матрице ровно числу столбцов в первой\n");
@@ -99,7 +104,7 @@ namespace Example_005 {
             
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Сколько столбцов во второй матрице?");
-            userColumns_2 = Convert.ToInt32(Console.ReadLine());
+            userColumns_2 = _helper.ParseUserInput(Console.ReadLine());
         }
 
         /// <summary>
@@ -179,16 +184,16 @@ namespace Example_005 {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkRed;
             switch (userAction) {
-                case 1:
+                case "1":
                     Console.WriteLine("{0," + center + "}", "+");
                     break;
-                case 2:
+                case "2":
                     Console.WriteLine("{0," + center + "}", "-");
                     break;
-                case 3:
+                case "3":
                     Console.WriteLine("{0," + center + "}", "*");
                     break;
-                case 4:
+                case "4":
                     Console.WriteLine("{0," + center + "}", "*");
                     break;
             }
@@ -251,7 +256,7 @@ namespace Example_005 {
         private void MultiplicationByNumberActions() {
             Console.WriteLine("На какое число будем умножать?");
             
-            int userNum = Convert.ToInt32(Console.ReadLine());
+            int userNum = _helper.ParseUserInput(Console.ReadLine(), true);
             _firstMatrix = Matrix<double>.Build.Dense(1, 1, userNum);
             
             AskSizesOnce();
@@ -262,6 +267,7 @@ namespace Example_005 {
         }
         
         public void Start() {
+            Console.Clear();
             Console.WriteLine("\nЗадание 1 «Создание методов из прошлошлого ДЗ»");
             Console.WriteLine("«Манипуляции с матрицами»\n");
             
@@ -273,7 +279,7 @@ namespace Example_005 {
             Console.WriteLine("3 - хочу перемножить матрицы");
             Console.WriteLine("4 - хочу умножть матрицу на число");
 
-            userAction = Convert.ToInt32(Console.ReadLine());
+            userAction = Console.ReadLine();
             
             Console.ForegroundColor = ConsoleColor.White;
             
@@ -281,25 +287,24 @@ namespace Example_005 {
             
             // создание и обработка матриц исходя из выбора пользователя
             switch (userAction) {
-                case 1:
+                case "1":
                     AdditionActions();
                     break;
-                case 2:
+                case "2":
                     SubtractionActions();
                     break;
-                case 3:
+                case "3":
                     MultiplicationActions();
                     break;
-                case 4:
+                case "4":
                     MultiplicationByNumberActions();
                     break;
                 default:
                     AdditionActions();
                     break;
             }
-
-            Helper helper = new Helper();
-            helper.PressAnyKey();
+            
+            _helper.PressAnyKey();
         }
     }
 }

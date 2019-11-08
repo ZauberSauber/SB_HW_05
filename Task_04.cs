@@ -3,6 +3,11 @@
 namespace Example_005 {
     public class Task_04 {
         /// <summary>
+        /// Вспомогательные методы
+        /// </summary>
+        private Helper _helper = new Helper();
+        
+        /// <summary>
         /// Метод определяет является ли
         /// переданная последовательность арифметической
         /// или геометрической прогрессией
@@ -45,9 +50,9 @@ namespace Example_005 {
             string[] numbersStr;
             int[] numbers = new int[0];
             
-            Console.Write("Введите последовательность целых чисел через пробел:\n");
+            Console.Write("\nВведите последовательность целых чисел через пробел:\n");
             numbersStr = Console.ReadLine().Split(' ', ',', '.');
-            
+
             for (int i = 0; i < numbersStr.Length; i++) {
                 isNumber = int.TryParse(numbersStr[i], out temp);
                 if(isNumber) {
@@ -55,11 +60,21 @@ namespace Example_005 {
                     numbers[numbers.Length - 1] = temp;
                 }
             }
+            
+            if (numbers.Length < 2) {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("\nДлина последовательности из чисел слишком мала");
+                Console.WriteLine("или значения не являются числами");
+                Console.WriteLine("\nНажмите любую клавишу, чтобы начать задание заново");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.ReadKey();
+                Console.Clear();
+                Start();
+            }
 
             IsProgression(numbers);
 
-            Helper helper = new Helper();
-            helper.PressAnyKey();
+            _helper.PressAnyKey();
         }
     }
 }

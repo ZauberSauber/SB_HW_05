@@ -4,6 +4,11 @@
 namespace Example_005 {
     public class Task_05 {
         /// <summary>
+        /// Вспомогательные методы
+        /// </summary>
+        private Helper _helper = new Helper();
+        
+        /// <summary>
         /// Функция Аккермана
         /// </summary>
         /// <param name="n"></param>
@@ -26,16 +31,15 @@ namespace Example_005 {
             Console.WriteLine("Вычисление функции Аккермана\n");
             
             Console.WriteLine("Введите первое число:");
-            int userFirstNum = Math.Abs(Convert.ToInt32(Console.ReadLine()));
+            int userFirstNum = _helper.ParseUserInput(Console.ReadLine());
             
             Console.WriteLine("Введите второе число:");
-            int userSecondNum = Math.Abs(Convert.ToInt32(Console.ReadLine()));
+            int userSecondNum = _helper.ParseUserInput(Console.ReadLine());
 
             int result = AkkermannFunc(userFirstNum, userSecondNum);
             Console.WriteLine($"\nРезультат: {result}");
 
-            Helper helper = new Helper();
-            helper.PressAnyKey();
+            _helper.PressAnyKey();
         }
     }
 }
